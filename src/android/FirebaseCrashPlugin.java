@@ -45,6 +45,24 @@ public class FirebaseCrashPlugin extends ReflectiveCordovaPlugin {
         callbackContext.success();
     }
 
+    @CordovaMethod(ExecutionThread.UI)
+    private void setCustomKey(String key, Object value, CallbackContext callbackContext) {
+        if(value instanceof String) {
+            firebaseCrashlytics.setCustomKey(key, value.toString());
+        } else if(value instanceof Boolean) {
+            firebaseCrashlytics.setCustomKey(key, (Boolean) value);
+        } else if(value instanceof Integer) {
+            firebaseCrashlytics.setCustomKey(key, (Integer) value);
+        } else if(value instanceof Long) {
+            firebaseCrashlytics.setCustomKey(key, (Long) value);
+        } else if(value instanceof Float) {
+            firebaseCrashlytics.setCustomKey(key, (Float) value);
+        } else if(value instanceof Double) {
+            firebaseCrashlytics.setCustomKey(key, (Double) value);
+        }
+        callbackContext.success();
+    }
+
     @CordovaMethod
     private void setEnabled(boolean enabled, CallbackContext callbackContext) {
         firebaseCrashlytics.setCrashlyticsCollectionEnabled(enabled);

@@ -17,6 +17,14 @@ module.exports = {
             exec(resolve, reject, PLUGIN_NAME, "setUserId", [userId]);
         });
     },
+    setCustomKey: function(key, value) {
+        return new Promise(function(resolve, reject) {
+            if (typeof key !== "string") {
+                return reject(new TypeError("Key must be a string"));
+            }
+            exec(resolve, reject, PLUGIN_NAME, "setCustomKey", [key, value]);
+        });
+    },
     setEnabled: function(enabled) {
         return new Promise(function(resolve, reject) {
             exec(resolve, reject, PLUGIN_NAME, "setEnabled", [enabled]);
