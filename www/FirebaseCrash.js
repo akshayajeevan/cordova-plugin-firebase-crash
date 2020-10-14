@@ -22,7 +22,15 @@ module.exports = {
             if (typeof key !== "string") {
                 return reject(new TypeError("Key must be a string"));
             }
-            exec(resolve, reject, PLUGIN_NAME, "setCustomKey", [key, value]);
+            if (typeof value !== "string" && typeof value !== "number" && typeof value !== "boolean") {
+                return reject(new TypeError("Value must be a string/number/boolean"));
+            } else if(typeof value === "string") {
+                exec(resolve, reject, PLUGIN_NAME, "setStringValue", [key, value]);
+            } else if(typeof value === "number") {
+                exec(resolve, reject, PLUGIN_NAME, "setNumValue", [key, value]);
+            } else if(typeof value === "boolean") {
+                exec(resolve, reject, PLUGIN_NAME, "setBoolValue", [key, value]);
+            }        
         });
     },
     setEnabled: function(enabled) {

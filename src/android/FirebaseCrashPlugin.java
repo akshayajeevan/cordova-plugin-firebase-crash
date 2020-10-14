@@ -46,12 +46,15 @@ public class FirebaseCrashPlugin extends ReflectiveCordovaPlugin {
     }
 
     @CordovaMethod(ExecutionThread.UI)
-    private void setCustomKey(String key, Object value, CallbackContext callbackContext) {
-        if(value instanceof String) {
-            firebaseCrashlytics.setCustomKey(key, value.toString());
-        } else if(value instanceof Boolean) {
-            firebaseCrashlytics.setCustomKey(key, (Boolean) value);
-        } else if(value instanceof Integer) {
+    private void setStringValue(String key, String value, CallbackContext callbackContext) {
+        firebaseCrashlytics.setCustomKey(key, value.toString());
+
+        callbackContext.success();
+    }
+
+    @CordovaMethod(ExecutionThread.UI)
+    private void setNumValue(String key, Object value, CallbackContext callbackContext) {
+        if(value instanceof Integer) {
             firebaseCrashlytics.setCustomKey(key, (Integer) value);
         } else if(value instanceof Long) {
             firebaseCrashlytics.setCustomKey(key, (Long) value);
@@ -60,6 +63,14 @@ public class FirebaseCrashPlugin extends ReflectiveCordovaPlugin {
         } else if(value instanceof Double) {
             firebaseCrashlytics.setCustomKey(key, (Double) value);
         }
+
+        callbackContext.success();
+    }
+
+    @CordovaMethod(ExecutionThread.UI)
+    private void setBoolValue(String key, boolean value, CallbackContext callbackContext) {
+        firebaseCrashlytics.setCustomKey(key, value);
+
         callbackContext.success();
     }
 

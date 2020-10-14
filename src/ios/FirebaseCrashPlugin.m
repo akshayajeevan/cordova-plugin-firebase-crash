@@ -44,18 +44,31 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)setCustomKey:(CDVInvokedUrlCommand *)command {
+- (void)setStringValue:(CDVInvokedUrlCommand *)command {
     NSString* key = [command.arguments objectAtIndex:0];
+    NSString* value = [command.arguments objectAtIndex:1];
 
-    if let value = [command.arguments objectAtIndex:1] as? String {
-        [[FIRCrashlytics crashlytics] setCustomValue:value forKey:key];
-    }
-    if let value = [command.arguments objectAtIndex:1] as? Int {
-        [[FIRCrashlytics crashlytics] setCustomValue:value forKey:key];
-    }
-    if let value = [command.arguments objectAtIndex:1] as? Double {
-        [[FIRCrashlytics crashlytics] setCustomValue:value forKey:key];
-    }
+    [[FIRCrashlytics crashlytics] setCustomValue:value forKey:key];
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setNumValue:(CDVInvokedUrlCommand *)command {
+    NSString* key = [command.arguments objectAtIndex:0];
+    NSNumber* value = [command.arguments objectAtIndex:1];
+
+    [[FIRCrashlytics crashlytics] setCustomValue:value forKey:key];
+
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setBoolValue:(CDVInvokedUrlCommand *)command {
+    NSString* key = [command.arguments objectAtIndex:0];
+    bool value = [command.arguments objectAtIndex:1] boolValue;
+
+    [[FIRCrashlytics crashlytics] setCustomValue:value forKey:key];
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
